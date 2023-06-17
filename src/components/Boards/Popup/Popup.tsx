@@ -15,7 +15,8 @@ const Popup: React.FC<PropsType> = ({isOpen, setIsOpen}) => {
         setName("");
     }, [isOpen]);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         dispatch(addBoard({name}));
         setIsOpen(false);
     }
