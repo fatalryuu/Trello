@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface Board {
+export type Board = {
     id: number,
     name: string,
 }
 
-export interface CounterState {
+export type CounterState = {
     boards: Array<Board>,
 }
 

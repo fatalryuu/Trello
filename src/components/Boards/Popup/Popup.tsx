@@ -4,7 +4,7 @@ import { addBoard } from "../../../redux/slices/boards.ts";
 
 type PropsType = {
     isOpen: boolean,
-    setIsOpen: () => void
+    setIsOpen: (isOpen: boolean) => void
 }
 
 const Popup: React.FC<PropsType> = ({isOpen, setIsOpen}) => {
