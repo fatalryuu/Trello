@@ -25,11 +25,22 @@ export const boardsSlice = createSlice({
             });
         },
         deleteBoard: (state, action: PayloadAction<{ id: number }>) => {
-            state.boards.filter(b => b.id !== action.payload.id);
+            state.boards = state.boards.filter(b => b.id !== action.payload.id);
+        },
+        editBoard: (state, action: PayloadAction<{ id: number, name: string }>) => {
+            state.boards = state.boards.map(b => {
+                if (b.id === action.payload.id) {
+                    return {
+                        id: b.id,
+                        name: action.payload.name
+                    };
+                }
+                return b;
+            });
         },
     },
 });
 
-export const {addBoard, deleteBoard} = boardsSlice.actions;
+export const {addBoard, deleteBoard, editBoard} = boardsSlice.actions;
 
 export default boardsSlice.reducer;

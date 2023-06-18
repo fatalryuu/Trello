@@ -4,7 +4,7 @@ import { wrapper } from "./Sidebar.css.ts";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
-import { Board } from "../../redux/slices/boards.ts";
+import { Board } from "../../redux/slices/boardsSlice.ts";
 
 const Sidebar: React.FC = () => {
     const boards = useSelector((state: RootState) => state.boards.boards);

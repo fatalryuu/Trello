@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBoard } from "../../../redux/slices/boards.ts";
+import { addBoard } from "../../../redux/slices/boardsSlice.ts";
+import { AppDispatch } from "../../../redux/store.ts";
 
 type PropsType = {
     isOpen: boolean,
@@ -9,7 +10,7 @@ type PropsType = {
 
 const Popup: React.FC<PropsType> = ({isOpen, setIsOpen}) => {
     const [name, setName] = useState("");
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
         setName("");
