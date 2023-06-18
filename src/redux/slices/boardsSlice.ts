@@ -24,11 +24,11 @@ export const boardsSlice = createSlice({
             });
         },
         deleteBoard: (state, action: PayloadAction<number>) => {
-            state.boards = state.boards.filter(b => b.id !== action.payload);
+            state.boards = state.boards.filter((board: BoardType) => board.id !== action.payload);
         },
         editBoard: (state, action: PayloadAction<BoardType>) => {
             const { id, name } = action.payload;
-            const board = state.boards.find(board => board.id === id);
+            const board: BoardType | undefined = state.boards.find((board: BoardType) => board.id === id);
             if (board) {
                 board.name = name;
             }

@@ -39,6 +39,7 @@ const List: React.FC<PropsType> = ({ info }) => {
                    hidden={!isVisible}
             />
             <button onClick={() => dispatch(deleteList(id))}>Delete</button>
+            <button>Add Task</button>
         </div>
     );
 };

@@ -27,11 +27,11 @@ export const listsSlice = createSlice({
             });
         },
         deleteList(state, action: PayloadAction<number>) {
-            state.lists = state.lists.filter(list => list.id !== action.payload);
+            state.lists = state.lists.filter((list: ListType) => list.id !== action.payload);
         },
         editList(state, action: PayloadAction<{ id: number, name: string }>) {
             const { id, name } = action.payload;
-            const list = state.lists.find(list => list.id === id);
+            const list: ListType | undefined = state.lists.find((list: ListType) => list.id === id);
             if (list) {
                 list.name = name;
             }
