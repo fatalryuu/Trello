@@ -18,8 +18,8 @@ export const listsSlice = createSlice({
     name: "lists",
     initialState,
     reducers: {
-        addList(state, action: PayloadAction<{name: string, boardId: number}>) {
-            const { name, boardId} = action.payload;
+        addList(state, action: PayloadAction<{ name: string, boardId: number }>) {
+            const { name, boardId } = action.payload;
             state.lists.push({
                 id: state.lists.length + 1,
                 name,
@@ -29,8 +29,8 @@ export const listsSlice = createSlice({
         deleteList(state, action: PayloadAction<number>) {
             state.lists = state.lists.filter(list => list.id !== action.payload);
         },
-        editList(state, action: PayloadAction<ListType>) {
-            const {id, name} = action.payload;
+        editList(state, action: PayloadAction<{ id: number, name: string }>) {
+            const { id, name } = action.payload;
             const list = state.lists.find(list => list.id === id);
             if (list) {
                 list.name = name;
@@ -39,5 +39,5 @@ export const listsSlice = createSlice({
     },
 });
 
-export const {addList, deleteList, editList} = listsSlice.actions;
+export const { addList, deleteList, editList } = listsSlice.actions;
 export default listsSlice.reducer;

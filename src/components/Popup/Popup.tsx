@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addBoard } from "../../redux/slices/boardsSlice.ts";
-import { AppDispatch } from "../../redux/store.ts";
-import { addList } from "../../redux/slices/listsSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { addBoard, BoardType } from "../../redux/slices/boardsSlice.ts";
+import { AppDispatch, RootState } from "../../redux/store.ts";
+import { addList, ListType } from "../../redux/slices/listsSlice.ts";
 
 type PropsType = {
     boardId: number | null,
@@ -13,6 +13,8 @@ type PropsType = {
 const Popup: React.FC<PropsType> = ({ boardId, isOpen, setIsOpen }) => {
     const [name, setName] = useState("");
     const dispatch: AppDispatch = useDispatch();
+    const boards: Array<BoardType> = useSelector((state: RootState) => state.boards.boards);
+    const lists: Array<ListType> = useSelector((state: RootState) => state.lists.lists);
 
     useEffect(() => {
         setName("");
@@ -21,9 +23,17 @@ const Popup: React.FC<PropsType> = ({ boardId, isOpen, setIsOpen }) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!boardId) {
-            dispatch(addBoard(name));
+            if (!boards.some((board: BoardType) => board.name === name)) {
+                dispatch(addBoard(name));
+            } else {
+                return;
+            }
         } else {
-            dispatch(addList({ name, boardId }));
+            if (!lists.some((list: ListType) => list.name === name)) {
+                dispatch(addList({ name, boardId }));
+            } else {
+                return;
+            }
         }
         setIsOpen(false);
     };
