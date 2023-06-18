@@ -1,6 +1,6 @@
 import { app } from "./App.css.ts";
-import Boards from "./components/Boards/Boards.tsx";
-import Board from "./components/Board/Board.tsx";
+import BoardsPage from "./components/BoardsPage/BoardsPage.tsx";
+import BoardPage from "./components/BoardPage/BoardPage.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import { Routes, Route } from "react-router-dom";
 import React from "react";
@@ -10,8 +10,8 @@ const App: React.FC = () => {
         <div className={app}>
             <Sidebar/>
             <Routes>
-                <Route path="/" element={<Boards/>}/>
-                <Route path="/:name" element={<Board/>}/>
+                <Route path="/" element={<BoardsPage/>}/>
+                <Route path="/:name" element={<BoardPage/>}/>
             </Routes>
         </div>
     );

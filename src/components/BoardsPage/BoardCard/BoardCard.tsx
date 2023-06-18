@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
-import { Board, deleteBoard, editBoard } from "../../../redux/slices/boardsSlice.ts";
+import { BoardType, deleteBoard, editBoard } from "../../../redux/slices/boardsSlice.ts";
 
 type PropsType = {
-    id: number,
-    name: string,
+    info: BoardType,
 }
 
-const BoardCard: React.FC<PropsType> = ({id, name}) => {
+const BoardCard: React.FC<PropsType> = ({ info }) => {
+    const { id, name } = info;
     const dispatch: AppDispatch = useDispatch();
-    const boards: Array<Board> = useSelector((state: RootState) => state.boards.boards);
+    const boards: Array<BoardType> = useSelector((state: RootState) => state.boards.boards);
     const [isVisible, setIsVisible] = useState(false);
     const [newName, setNewName] = useState("");
 
@@ -20,7 +20,7 @@ const BoardCard: React.FC<PropsType> = ({id, name}) => {
             setIsVisible(true);
         }
         if (isVisible && newName) {
-            if (!boards.some((board: Board) => board.name === newName)) {
+            if (!boards.some((board: BoardType) => board.name === newName)) {
                 dispatch(editBoard({id, name: newName}));
                 setIsVisible(false);
                 setNewName("");
@@ -42,7 +42,7 @@ const BoardCard: React.FC<PropsType> = ({id, name}) => {
                    onChange={(e) => setNewName(e.target.value)}
                    hidden={!isVisible}
             />
-            <button onClick={() => dispatch(deleteBoard({id}))}>Delete</button>
+            <button onClick={() => dispatch(deleteBoard(id))}>Delete</button>
         </div>
     );
 };

@@ -1,16 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type Board = {
+export type BoardType = {
     id: number,
     name: string,
 }
 
-export type CounterState = {
-    boards: Array<Board>,
+export type BoardsState = {
+    boards: Array<BoardType>,
 }
 
-const initialState: CounterState = {
+const initialState: BoardsState = {
     boards: [],
 };
 
@@ -18,25 +17,21 @@ export const boardsSlice = createSlice({
     name: "boards",
     initialState,
     reducers: {
-        addBoard: (state, action: PayloadAction<{ name: string }>) => {
+        addBoard: (state, action: PayloadAction<string>) => {
             state.boards.push({
                 id: state.boards.length + 1,
-                name: action.payload.name,
+                name: action.payload,
             });
         },
-        deleteBoard: (state, action: PayloadAction<{ id: number }>) => {
-            state.boards = state.boards.filter(b => b.id !== action.payload.id);
+        deleteBoard: (state, action: PayloadAction<number>) => {
+            state.boards = state.boards.filter(b => b.id !== action.payload);
         },
-        editBoard: (state, action: PayloadAction<{ id: number, name: string }>) => {
-            state.boards = state.boards.map(b => {
-                if (b.id === action.payload.id) {
-                    return {
-                        id: b.id,
-                        name: action.payload.name
-                    };
-                }
-                return b;
-            });
+        editBoard: (state, action: PayloadAction<BoardType>) => {
+            const { id, name } = action.payload;
+            const board = state.boards.find(board => board.id === id);
+            if (board) {
+                board.name = name;
+            }
         },
     },
 });
