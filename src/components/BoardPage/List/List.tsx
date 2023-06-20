@@ -6,6 +6,7 @@ import { header, wrapper } from "./List.css.ts";
 import { TaskType } from "../../../redux/slices/tasksSlice.ts";
 import Task from "./Task/Task.tsx";
 import Popup from "../../Popup/Popup.tsx";
+import { addAction } from "../../../redux/slices/menuSlice.ts";
 
 type PropsType = {
     info: ListType,
@@ -25,6 +26,7 @@ const List: React.FC<PropsType> = ({ info }) => {
         if (isVisible && newName) {
             if (!lists.some((list: ListType) => list.name === newName && list.boardId === boardId)) {
                 dispatch(editList({ id, name: newName }));
+                dispatch(addAction({text: `You renamed list "${name}" to "${newName}"`, boardId}));
                 setIsVisible(false);
                 setNewName("");
             }
@@ -33,6 +35,11 @@ const List: React.FC<PropsType> = ({ info }) => {
 
     const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks.filter((task: TaskType) => task.listId === id));
     const tasksUI: Array<JSX.Element> = tasks.map((task: TaskType) => <Task info={task} key={task.id}/>);
+
+    const handleDelete = () => {
+        dispatch(deleteList(id));
+        dispatch(addAction({text: `You deleted list "${name}"`, boardId}));
+    }
 
     return (
         <div className={wrapper}>
@@ -49,7 +56,7 @@ const List: React.FC<PropsType> = ({ info }) => {
                            onChange={(e) => setNewName(e.target.value)}
                            hidden={!isVisible}
                     />
-                    <button onClick={() => dispatch(deleteList(id))}>Delete</button>
+                    <button onClick={handleDelete}>Delete</button>
                 </div>
             </header>
             <br/>

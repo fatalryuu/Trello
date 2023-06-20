@@ -1,12 +1,12 @@
 import React from "react";
 import Element from "./Element/Element.tsx";
-import { wrapper } from "./Sidebar.css.ts";
+import { wrapper } from "./SideBar.css.ts";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { BoardType } from "../../redux/slices/boardsSlice.ts";
 
-const Sidebar: React.FC = () => {
+const SideBar: React.FC = () => {
     const boards = useSelector((state: RootState) => state.boards.boards);
     const elements = boards.map((b: BoardType) => <Element name={b.name} key={b.id}/>);
     return (
@@ -20,4 +20,4 @@ const Sidebar: React.FC = () => {
     );
 };
 
-export default Sidebar;
+export default SideBar;
