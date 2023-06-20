@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBoard, BoardType } from "../../redux/slices/boardsSlice.ts";
 import { AppDispatch, RootState } from "../../redux/store.ts";
 import { addList, ListType } from "../../redux/slices/listsSlice.ts";
-import { addTask } from "../../redux/slices/tasksSlice.ts";
+import { addDescription, addTask } from "../../redux/slices/tasksSlice.ts";
 
 type PropsType = {
     boardId: number | null,
     listId: number | null,
+    taskId: number | null,
     isOpen: boolean,
     setIsOpen: (isOpen: boolean) => void
 }
 
-const Popup: React.FC<PropsType> = ({ boardId, listId, isOpen, setIsOpen }) => {
+const Popup: React.FC<PropsType> = ({ boardId, listId, taskId, isOpen, setIsOpen }) => {
     const [name, setName] = useState("");
     const dispatch: AppDispatch = useDispatch();
     const boards: Array<BoardType> = useSelector((state: RootState) => state.boards.boards);
@@ -24,7 +25,7 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, isOpen, setIsOpen }) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!boardId && !listId) {
+        if (!boardId && !listId && !taskId) {
             if (!boards.some((board: BoardType) => board.name === name)) {
                 dispatch(addBoard(name));
             } else {
@@ -38,6 +39,8 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, isOpen, setIsOpen }) => {
             } else {
                 return;
             }
+        } else if (taskId) {
+            dispatch(addDescription({ id: taskId, description: name }));
         }
         setIsOpen(false);
     };
@@ -47,7 +50,7 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, isOpen, setIsOpen }) => {
             <button onClick={() => setIsOpen(false)}>X</button>
             <h2>{boardId ? "Create List" : "Create board"}</h2>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name">{taskId ? "Description:" : "Name:"}</label>
                 <br/>
                 <input type="text" id="name" value={name}
                        onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}/>

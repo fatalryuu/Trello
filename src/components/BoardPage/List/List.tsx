@@ -36,7 +36,7 @@ const List: React.FC<PropsType> = ({ info }) => {
 
     return (
         <div className={wrapper}>
-            <Popup boardId={boardId} listId={id} isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <Popup boardId={boardId} listId={id} taskId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
             <header className={header}>
                 {name}
                 <div>

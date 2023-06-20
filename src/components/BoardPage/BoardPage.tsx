@@ -20,7 +20,7 @@ const BoardPage: React.FC = () => {
         <div className={wrapper}>
             <header>
                 <h2>{name}</h2>
-                <Popup boardId={boardId} listId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                <Popup boardId={boardId} listId={null} taskId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
                 <button onClick={() => setIsOpen(true)}>Add List</button>
                 <div className={list__container}>
                     {listsUI}
