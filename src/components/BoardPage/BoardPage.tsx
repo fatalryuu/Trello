@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { wrapper } from "./BoardPage.css.ts";
+import { list__container, wrapper } from "./BoardPage.css.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { ListType } from "../../redux/slices/listsSlice.ts";
@@ -20,9 +20,11 @@ const BoardPage: React.FC = () => {
         <div className={wrapper}>
             <header>
                 <h2>{name}</h2>
-                <Popup boardId={boardId} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                <Popup boardId={boardId} listId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
                 <button onClick={() => setIsOpen(true)}>Add List</button>
-                {listsUI}
+                <div className={list__container}>
+                    {listsUI}
+                </div>
             </header>
 
         </div>

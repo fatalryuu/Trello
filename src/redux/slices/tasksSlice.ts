@@ -31,16 +31,22 @@ export const tasksSlice = createSlice({
         deleteTask(state, action: PayloadAction<number>) {
             state.tasks = state.tasks.filter((task: TaskType) => task.id !== action.payload);
         },
-        editTask(state, action: PayloadAction<{ id: number, name: string, description: string }>) {
-            const { id, name, description } = action.payload;
+        editTask(state, action: PayloadAction<{ id: number, name: string }>) {
+            const { id, name } = action.payload;
             const task: TaskType | undefined = state.tasks.find((task: TaskType) => task.id === id);
             if (task) {
                 task.name = name;
+            }
+        },
+        addDescription(state, action: PayloadAction<{ id: number, description: string }>) {
+            const { id, description } = action.payload;
+            const task: TaskType | undefined = state.tasks.find((task: TaskType) => task.id === id);
+            if (task) {
                 task.description = description;
             }
         },
     },
 });
 
-export const { addTask, deleteTask, editTask } = tasksSlice.actions;
+export const { addTask, deleteTask, editTask, addDescription } = tasksSlice.actions;
 export default tasksSlice.reducer;

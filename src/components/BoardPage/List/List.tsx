@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { deleteList, editList, ListType } from "../../../redux/slices/listsSlice.ts";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
 import { useDispatch, useSelector } from "react-redux";
+import { header, wrapper } from "./List.css.ts";
+import { TaskType } from "../../../redux/slices/tasksSlice.ts";
+import Task from "./Task/Task.tsx";
+import Popup from "../../Popup/Popup.tsx";
 
 type PropsType = {
     info: ListType,
 }
 
 const List: React.FC<PropsType> = ({ info }) => {
-    const { id, name , boardId} = info;
+    const { id, name, boardId } = info;
     const dispatch: AppDispatch = useDispatch();
     const lists: Array<ListType> = useSelector((state: RootState) => state.lists.lists);
     const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [newName, setNewName] = useState("");
     const handleRename = () => {
         if (!isVisible) {
@@ -19,27 +24,37 @@ const List: React.FC<PropsType> = ({ info }) => {
         }
         if (isVisible && newName) {
             if (!lists.some((list: ListType) => list.name === newName && list.boardId === boardId)) {
-                dispatch(editList({id, name: newName}));
+                dispatch(editList({ id, name: newName }));
                 setIsVisible(false);
                 setNewName("");
             }
         }
-    }
+    };
+
+    const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks.filter((task: TaskType) => task.listId === id));
+    const tasksUI: Array<JSX.Element> = tasks.map((task: TaskType) => <Task info={task} key={task.id}/>);
 
     return (
-        <div>
-            {name}
-            <button onClick={handleRename}>
-                {isVisible ? "Confirm" : "Rename"}
-            </button>
-            <input type="text"
-                   placeholder="New name..."
-                   value={newName}
-                   onChange={(e) => setNewName(e.target.value)}
-                   hidden={!isVisible}
-            />
-            <button onClick={() => dispatch(deleteList(id))}>Delete</button>
-            <button>Add Task</button>
+        <div className={wrapper}>
+            <Popup boardId={boardId} listId={id} isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <header className={header}>
+                {name}
+                <div>
+                    <button onClick={handleRename}>
+                        {isVisible ? "Confirm" : "Rename"}
+                    </button>
+                    <input type="text"
+                           placeholder="New name..."
+                           value={newName}
+                           onChange={(e) => setNewName(e.target.value)}
+                           hidden={!isVisible}
+                    />
+                    <button onClick={() => dispatch(deleteList(id))}>Delete</button>
+                </div>
+            </header>
+            <br/>
+            {tasksUI}
+            <button onClick={() => setIsOpen(true)}>Add Task</button>
         </div>
     );
 };

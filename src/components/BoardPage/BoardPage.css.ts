@@ -5,3 +5,7 @@ export const wrapper = style({
     width: "88%",
     background: `linear-gradient(to bottom right, ${vars.colors.cardPrimary}, ${vars.colors.cardSecondary})`,
 });
+
+export const list__container = style({
+    display: "flex",
+});

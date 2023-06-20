@@ -12,7 +12,7 @@ const BoardsPage: React.FC = () => {
 
     return (
         <div>
-            <Popup boardId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <Popup boardId={null} listId={null} isOpen={isOpen} setIsOpen={setIsOpen}/>
             <h2>Boards</h2>
             <button onClick={() => setIsOpen(true)}>Create Board</button>
             {cards}
