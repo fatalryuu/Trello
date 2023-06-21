@@ -45,8 +45,11 @@ export const tasksSlice = createSlice({
                 task.description = description;
             }
         },
+        updateTasks(state, action: PayloadAction<Array<TaskType>>) {
+            state.tasks = action.payload;
+        },
     },
 });
 
-export const { addTask, deleteTask, editTask, addDescription } = tasksSlice.actions;
+export const { addTask, deleteTask, editTask, addDescription, updateTasks } = tasksSlice.actions;
 export default tasksSlice.reducer;

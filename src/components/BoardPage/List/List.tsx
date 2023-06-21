@@ -3,10 +3,11 @@ import { deleteList, editList, ListType } from "../../../redux/slices/listsSlice
 import { AppDispatch, RootState } from "../../../redux/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { header, wrapper } from "./List.css.ts";
-import { TaskType } from "../../../redux/slices/tasksSlice.ts";
+import { TaskType, updateTasks } from "../../../redux/slices/tasksSlice.ts";
 import Task from "./Task/Task.tsx";
 import Popup from "../../Popup/Popup.tsx";
 import { addAction } from "../../../redux/slices/menuSlice.ts";
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 
 type PropsType = {
     info: ListType,
@@ -19,6 +20,7 @@ const List: React.FC<PropsType> = ({ info }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [newName, setNewName] = useState("");
+
     const handleRename = () => {
         if (!isVisible) {
             setIsVisible(true);
@@ -26,7 +28,7 @@ const List: React.FC<PropsType> = ({ info }) => {
         if (isVisible && newName) {
             if (!lists.some((list: ListType) => list.name === newName && list.boardId === boardId)) {
                 dispatch(editList({ id, name: newName }));
-                dispatch(addAction({text: `You renamed list "${name}" to "${newName}"`, boardId}));
+                dispatch(addAction({ text: `You renamed list "${name}" to "${newName}"`, boardId }));
                 setIsVisible(false);
                 setNewName("");
             }
@@ -34,11 +36,19 @@ const List: React.FC<PropsType> = ({ info }) => {
     };
 
     const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks.filter((task: TaskType) => task.listId === id));
-    const tasksUI: Array<JSX.Element> = tasks.map((task: TaskType) => <Task info={task} key={task.id}/>);
 
     const handleDelete = () => {
         dispatch(deleteList(id));
-        dispatch(addAction({text: `You deleted list "${name}"`, boardId}));
+        dispatch(addAction({ text: `You deleted list "${name}"`, boardId }));
+    };
+
+    const handleOnDragEnd = (result: DropResult) => {
+        if (!result.destination) return;
+        const items = Array.from(tasks);
+        const [reorderItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderItem);
+
+        dispatch(updateTasks(items));
     }
 
     return (
@@ -60,7 +70,26 @@ const List: React.FC<PropsType> = ({ info }) => {
                 </div>
             </header>
             <br/>
-            {tasksUI}
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="tasks">
+                    {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
+                            {tasks.map((task: TaskType, index: number) => {
+                                return (
+                                    <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                        {(provided) => (
+                                            <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                <Task info={task}/>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                )
+                            })}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
             <button onClick={() => setIsOpen(true)}>Add Task</button>
         </div>
     );

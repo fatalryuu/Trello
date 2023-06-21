@@ -58,7 +58,7 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, taskId, isOpen, setIsOpen
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">{taskId ? "Description:" : "Name:"}</label>
                 <br/>
-                <input type="text" id="name" value={name}
+                <input type="text" id="name" value={name} autoComplete="off"
                        onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}/>
                 <br/>
                 <input type="submit" value="Create"/>
