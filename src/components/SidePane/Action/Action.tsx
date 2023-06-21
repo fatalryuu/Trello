@@ -7,8 +7,11 @@ type PropsType = {
 }
 
 const getTimeString = (timeDifference: number): string => {
-    if (timeDifference < 60000) { // < 1 min
+    if (timeDifference < 1000) { // < 1 sec
         return "just now";
+    } else if (timeDifference < 60000) { // < 1 min
+        const secondsAgo = Math.floor(timeDifference / 1000);
+        return `${secondsAgo} second(-s) ago`;
     } else if (timeDifference < 3600000) { // < 1 hr
         const minutesAgo = Math.floor(timeDifference / 60000);
         return `${minutesAgo} minute(-s) ago`;

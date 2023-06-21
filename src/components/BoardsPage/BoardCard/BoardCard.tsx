@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
 import { BoardType, deleteBoard, editBoard } from "../../../redux/slices/boardsSlice.ts";
+import { addAction } from "../../../redux/slices/menuSlice.ts";
 
 type PropsType = {
     info: BoardType,
@@ -22,6 +23,7 @@ const BoardCard: React.FC<PropsType> = ({ info }) => {
         if (isVisible && newName) {
             if (!boards.some((board: BoardType) => board.name === newName)) {
                 dispatch(editBoard({id, name: newName}));
+                dispatch(addAction({text: `You renamed this board from "${name}" to "${newName}"`, boardId: id}));
                 setIsVisible(false);
                 setNewName("");
             }
