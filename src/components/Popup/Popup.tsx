@@ -29,7 +29,7 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, taskId, isOpen, setIsOpen
         e.preventDefault();
         if (!boardId && !listId && !taskId) {
             if (!boards.some((board: BoardType) => board.name === name)) {
-                dispatch(addBoard(name));
+                dispatch(addBoard({id: 1, name}));
                 dispatch(addAction({text: `You created this board`, boardId: boards.length + 1}));
             } else {
                 return;
