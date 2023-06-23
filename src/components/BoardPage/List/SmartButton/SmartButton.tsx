@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { add, form, plus } from "./SmartButton.css.ts";
-import { closeButton, input, lower, submit } from "../../SmartButton/SmartButton.css.ts";
+import { add, form, plus, input } from "./SmartButton.css.ts";
+import { closeButton, lower, submit } from "../../SmartButton/SmartButton.css.ts";
 import { ListType } from "../../../../redux/slices/listsSlice.ts";
 import { addAction } from "../../../../redux/slices/menuSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,14 +22,16 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
 
     const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        const id: number = Math.round(Math.random() * 10000);
-        dispatch(addTask({ id, name: taskName, description: null, listId }));
-        dispatch(addAction({
-            text: `added card "${taskName}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`,
-            boardId
-        }));
-        setTaskName("");
-        setIsOpen(false);
+        if (taskName) {
+            const id: number = Math.round(Math.random() * 10000);
+            dispatch(addTask({ id, name: taskName, description: null, listId }));
+            dispatch(addAction({
+                text: `added card "${taskName}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`,
+                boardId
+            }));
+            setTaskName("");
+            setIsOpen(false);
+        }
     };
 
     const onClose = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +39,13 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
         setTaskName("");
         setIsOpen(false);
     };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        //max 16 symbols
+        if (taskName.length < 16 || e.target.value === taskName.substring(0, taskName.length - 1) || e.target.value === "") {
+            setTaskName(e.target.value)
+        }
+    }
 
     return (
         <button onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
@@ -46,7 +55,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
                         type="text"
                         placeholder="Enter name for this card"
                         value={taskName}
-                        onChange={(e) => setTaskName(e.target.value)}
+                        onChange={handleChange}
                         className={input}
                         autoFocus={true}
                     />

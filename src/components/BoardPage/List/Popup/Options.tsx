@@ -13,7 +13,7 @@ type PropsType = {
     name: string,
     boardId: number,
     isVisible: boolean,
-    setIsVisible: (boolean) => void,
+    setIsVisible: (isVisible: boolean) => void,
 }
 
 const Options: React.FC<PropsType> = ({ id, name, boardId, isVisible, setIsVisible }) => {

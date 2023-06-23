@@ -11,7 +11,6 @@ export const add = style({
     color: "black",
     border: "none",
     borderRadius: 10,
-    backgroundColor: "white",
     fontSize: "0.9rem",
     minWidth: 270,
     cursor: "pointer",
@@ -29,7 +28,21 @@ export const form = style({
     color: "white",
     border: "none",
     borderRadius: 10,
-    backgroundColor: "white",
     fontSize: "1rem",
     minWidth: 270,
+});
+
+export const input = style({
+    width: "91.5%",
+    height: 25,
+    outline: "none",
+    padding: "6px 10px",
+    borderRadius: 10,
+    marginBottom: 10,
+    border: "none",
+    boxShadow: "0 1px 1px #afafaf",
+    fontSize: "1rem",
+    "::placeholder": {
+        fontSize: "0.9rem",
+    },
 });
