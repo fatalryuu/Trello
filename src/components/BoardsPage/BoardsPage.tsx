@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import BoardCard from "./BoardCard/BoardCard.tsx";
 import { RootState } from "../../redux/store.ts";
 import { BoardType } from "../../redux/slices/boardsSlice.ts";
-import { wrapper, trello__header, boards__header, boards as boardsStyle, button, cards as cardsStyle } from "./BoardsPage.css.ts";
+import { wrapper, trelloHeader, boardsHeader, boards as boardsStyle, button, cards as cardsStyle } from "./BoardsPage.css.ts";
 import NewBoardPopup from "./Popup/NewBoardPopup.tsx";
 
 const BoardsPage: React.FC = () => {
@@ -13,9 +13,9 @@ const BoardsPage: React.FC = () => {
 
     return (
         <div className={wrapper}>
-            <h1 className={trello__header}>Trello</h1>
+            <h1 className={trelloHeader}>Trello</h1>
             <div className={boardsStyle}>
-                <h2 className={boards__header}>Boards</h2>
+                <h2 className={boardsHeader}>Boards</h2>
                 <NewBoardPopup isOpen={isOpen} setIsOpen={setIsOpen}/>
                 <div className={cardsStyle}>
                     <button onClick={() => setIsOpen(true)} className={button}>Create Board</button>

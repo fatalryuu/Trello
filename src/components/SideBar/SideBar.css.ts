@@ -2,11 +2,11 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../vars.css.ts";
 
 export const wrapper = style({
-    width: "14%",
+    width: "15vw",
     borderRight: `1px solid ${vars.colors.borderColor}`,
 });
 
-export const trello__header = style({
+export const trelloHeader = style({
     borderBottom: `1px solid ${vars.colors.borderColor}`,
     marginBottom: 10,
     textAlign: "center",
@@ -38,7 +38,7 @@ export const text = style({
     fontWeight: 400,
 });
 
-export const boards__header = style({
+export const boardsHeader = style({
     padding: "5px 10px 5px 10px",
     fontSize: "1.2rem",
 });

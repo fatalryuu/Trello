@@ -18,10 +18,10 @@ export const listsSlice = createSlice({
     name: "lists",
     initialState,
     reducers: {
-        addList(state, action: PayloadAction<{ name: string, boardId: number }>) {
-            const { name, boardId } = action.payload;
+        addList(state, action: PayloadAction<ListType>) {
+            const { id, name, boardId } = action.payload;
             state.lists.push({
-                id: state.lists.length + 1,
+                id,
                 name,
                 boardId,
             });

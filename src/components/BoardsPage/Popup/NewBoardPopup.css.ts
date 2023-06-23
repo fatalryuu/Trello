@@ -22,7 +22,6 @@ export const close__button = style({
     border: "none",
     cursor: "pointer",
     background: "none",
-    borderRadius: 3,
     paddingTop: 2,
     paddingRight: 5,
     fontWeight: 600,

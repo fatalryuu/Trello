@@ -1,5 +1,5 @@
 import React from "react";
-import { wrapper, menu__header, actions__header, text } from "./SidePane.css.ts";
+import { wrapper, menuHeader, actionsHeader, text } from "./SidePane.css.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { ActionType } from "../../redux/slices/menuSlice.ts";
@@ -16,8 +16,8 @@ const SidePane: React.FC<PropsType> = ({ boardId }) => {
 
     return (
         <div className={wrapper}>
-            <h2 className={menu__header}>Menu</h2>
-            <h3 className={actions__header}>
+            <h2 className={menuHeader}>Menu</h2>
+            <h3 className={actionsHeader}>
                 <FormatListBulletedIcon style={{fontSize: "medium"}}/>
                 <span className={text}>Actions</span>
             </h3>

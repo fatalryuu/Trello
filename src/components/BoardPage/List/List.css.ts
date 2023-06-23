@@ -1,8 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
 export const wrapper = style({
-    width: 250,
-    margin: "20px 0 0 20px",
+    alignSelf: "flex-start",
+    minWidth: 250,
+    margin: "0 10px",
     backgroundColor: "white",
     padding: 10,
     border: "1px solid white",

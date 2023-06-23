@@ -2,20 +2,22 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../vars.css.ts";
 
 export const wrapper = style({
-    width: "20%",
+    width: "20vw",
     padding: 10,
     borderLeft: `1px solid ${vars.colors.borderColor}`,
     backgroundColor: "white",
+    overflowY: "auto",
+    overflowX: "hidden",
 });
 
-export const menu__header = style({
+export const menuHeader = style({
     borderBottom: `1px solid ${vars.colors.borderColor}`,
     textAlign: "center",
-    paddingBottom: 10,
+    paddingBottom: 20,
     fontWeight: 400,
 });
 
-export const actions__header = style({
+export const actionsHeader = style({
     display: "flex",
     alignItems: "center",
     fontSize: "1.1rem",
