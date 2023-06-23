@@ -1,5 +1,6 @@
 import React from "react";
-import { active, element, preview } from "./Element.css.ts";
+import { active, element } from "../SideBar.css.ts";
+import { preview } from "./Element.css.ts";
 import { NavLink } from "react-router-dom";
 
 type PropType = {
