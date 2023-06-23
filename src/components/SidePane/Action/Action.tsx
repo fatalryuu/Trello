@@ -18,7 +18,7 @@ const getTimeString = (timeDifference: number): string => {
     } else if (timeDifference < 86400000) { // < 24 hr
         const hoursAgo = Math.floor(timeDifference / 3600000);
         return `${hoursAgo} hour(-s) ago`;
-    } else { // more than 24 hr ago
+    } else { // > 24 hr
         return "more than a day ago";
     }
 };
@@ -30,7 +30,7 @@ const Action: React.FC<PropsType> = ({ info }) => {
 
     return (
         <div className={wrapper}>
-            {text}
+            <b>You </b>{text}
             <br/>
             {timeAgo}
         </div>

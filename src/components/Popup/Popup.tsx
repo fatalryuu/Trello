@@ -30,20 +30,20 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, taskId, isOpen, setIsOpen
         if (!boardId && !listId && !taskId) {
             if (!boards.some((board: BoardType) => board.name === name)) {
                 dispatch(addBoard({id: 1, name}));
-                dispatch(addAction({text: `You created this board`, boardId: boards.length + 1}));
+                dispatch(addAction({text: `created this board`, boardId: boards.length + 1}));
             } else {
                 return;
             }
         } else if (listId) {
             dispatch(addTask({name, listId}));
-            dispatch(addAction({text: `You added card "${name}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`, boardId}));
+            dispatch(addAction({text: `added card "${name}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`, boardId}));
         } else if (taskId) {
             dispatch(addDescription({ id: taskId, description: name }));
-            dispatch(addAction({text: `You added description "${name}" to the "${tasks.find((task: TaskType) => task.id === taskId)?.name}" card`, boardId}));
+            dispatch(addAction({text: `added description "${name}" to the "${tasks.find((task: TaskType) => task.id === taskId)?.name}" card`, boardId}));
         } else if (boardId) {
             if (!lists.some((list: ListType) => list.name === name && list.boardId === boardId)) {
                 dispatch(addList({ name, boardId }));
-                dispatch(addAction({text: `You added list "${name}" to this board`, boardId}));
+                dispatch(addAction({text: `added list "${name}" to this board`, boardId}));
             } else {
                 return;
             }

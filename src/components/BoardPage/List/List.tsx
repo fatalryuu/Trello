@@ -28,7 +28,7 @@ const List: React.FC<PropsType> = ({ info }) => {
         if (isVisible && newName) {
             if (!lists.some((list: ListType) => list.name === newName && list.boardId === boardId)) {
                 dispatch(editList({ id, name: newName }));
-                dispatch(addAction({ text: `You renamed list "${name}" to "${newName}"`, boardId }));
+                dispatch(addAction({ text: `renamed list "${name}" to "${newName}"`, boardId }));
                 setIsVisible(false);
                 setNewName("");
             }
@@ -39,7 +39,7 @@ const List: React.FC<PropsType> = ({ info }) => {
 
     const handleDelete = () => {
         dispatch(deleteList(id));
-        dispatch(addAction({ text: `You deleted list "${name}"`, boardId }));
+        dispatch(addAction({ text: `deleted list "${name}"`, boardId }));
     };
 
     const handleOnDragEnd = (result: DropResult) => {
@@ -48,6 +48,7 @@ const List: React.FC<PropsType> = ({ info }) => {
         const [reorderItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderItem);
 
+        dispatch(addAction({ text: `moved task "${reorderItem.name}"`, boardId }));
         dispatch(updateTasks(items));
     }
 
@@ -90,7 +91,7 @@ const List: React.FC<PropsType> = ({ info }) => {
                     )}
                 </Droppable>
             </DragDropContext>
-            <button onClick={() => setIsOpen(true)}>Add Task</button>
+            <button onClick={() => setIsOpen(true)}>Add Card</button>
         </div>
     );
 };

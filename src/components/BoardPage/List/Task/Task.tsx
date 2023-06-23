@@ -26,7 +26,7 @@ const Task: React.FC<PropsType> = ({ info }) => {
         }
         if (isVisible && newName) {
             dispatch(editTask({ id, name: newName }));
-            dispatch(addAction({text: `You renamed task "${name}" to "${newName}"`, boardId}));
+            dispatch(addAction({text: `renamed task "${name}" to "${newName}"`, boardId}));
             setIsVisible(false);
             setNewName("");
         }
@@ -34,7 +34,7 @@ const Task: React.FC<PropsType> = ({ info }) => {
 
     const handleDelete = () => {
         dispatch(deleteTask(id));
-        dispatch(addAction({text: `You deleted task "${name}"`, boardId}));
+        dispatch(addAction({text: `deleted task "${name}"`, boardId}));
     }
 
     return (

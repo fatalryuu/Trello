@@ -24,7 +24,7 @@ const NewBoardPopup: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
         if (!boards.some((board: BoardType) => board.name === name)) {
             const id: number = Math.round(Math.random() * 10000);
             dispatch(addBoard({ id, name }));
-            dispatch(addAction({ text: `You created this board`, boardId: id }));
+            dispatch(addAction({ text: `created this board`, boardId: id }));
         } else {
             return;
         }
