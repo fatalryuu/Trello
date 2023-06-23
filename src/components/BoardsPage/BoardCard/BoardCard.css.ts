@@ -33,7 +33,7 @@ export const button = style({
     paddingRight: 10,
 });
 
-export const name__input = style({
+export const nameInput = style({
     border: "none",
     outline: "none",
     width: "50%",

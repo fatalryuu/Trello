@@ -35,8 +35,7 @@ const Popup: React.FC<PropsType> = ({ boardId, listId, taskId, isOpen, setIsOpen
                 return;
             }
         } else if (listId) {
-            dispatch(addTask({name, listId}));
-            dispatch(addAction({text: `added card "${name}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`, boardId}));
+
         } else if (taskId) {
             dispatch(addDescription({ id: taskId, description: name }));
             dispatch(addAction({text: `added description "${name}" to the "${tasks.find((task: TaskType) => task.id === taskId)?.name}" card`, boardId}));

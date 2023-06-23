@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { add, closeButton, form, input, lower, plus, submit } from "./SmartButton.css.ts";
-import { addList, ListType } from "../../../redux/slices/listsSlice.ts";
-import { addAction } from "../../../redux/slices/menuSlice.ts";
+import { add, form, plus } from "./SmartButton.css.ts";
+import { closeButton, input, lower, submit } from "../../SmartButton/SmartButton.css.ts";
+import { ListType } from "../../../../redux/slices/listsSlice.ts";
+import { addAction } from "../../../../redux/slices/menuSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux/store.ts";
+import { AppDispatch, RootState } from "../../../../redux/store.ts";
+import { addTask } from "../../../../redux/slices/tasksSlice.ts";
 
 type PropsType = {
     boardId: number,
+    listId: number,
 }
 
-const SmartButton: React.FC<PropsType> = ({ boardId }) => {
+const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [listName, setListName] = useState("");
+    const [taskName, setTaskName] = useState("");
 
     const lists: Array<ListType> = useSelector((state: RootState) => state.lists.lists.filter((list: ListType) => list.boardId === boardId));
 
@@ -19,20 +22,19 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
 
     const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        if (listName && !lists.some((list: ListType) => list.name === listName && list.boardId === boardId)) {
-            const id: number = Math.round(Math.random() * 10000);
-            dispatch(addList({ id, name: listName, boardId }));
-            dispatch(addAction({ text: `added list "${listName}" to this board`, boardId }));
-            setListName("");
-            setIsOpen(false);
-        } else {
-            return;
-        }
+        const id: number = Math.round(Math.random() * 10000);
+        dispatch(addTask({ id, name: taskName, description: null, listId }));
+        dispatch(addAction({
+            text: `added card "${taskName}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`,
+            boardId
+        }));
+        setTaskName("");
+        setIsOpen(false);
     };
 
     const onClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        setListName("");
+        setTaskName("");
         setIsOpen(false);
     };
 
@@ -42,14 +44,14 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
                 ? <div>
                     <input
                         type="text"
-                        placeholder="Enter list name"
-                        value={listName}
-                        onChange={(e) => setListName(e.target.value)}
+                        placeholder="Enter name for this card"
+                        value={taskName}
+                        onChange={(e) => setTaskName(e.target.value)}
                         className={input}
                         autoFocus={true}
                     />
                     <div className={lower}>
-                        <button onClick={onAddClick} className={submit}>Add List</button>
+                        <button onClick={onAddClick} className={submit}>Add Card</button>
                         <button onClick={onClose} className={closeButton}>X</button>
                     </div>
                 </div>
@@ -57,7 +59,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
                     <span className={plus}>
                         +&nbsp;
                     </span>
-                    Add List
+                    Add Card
                 </>
             }
         </button>

@@ -14,3 +14,8 @@ export const header = style({
     display: "flex",
     justifyContent: "space-between",
 });
+
+export const text = style({
+    marginLeft: 10,
+    fontWeight: 600,
+});

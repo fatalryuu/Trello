@@ -44,7 +44,7 @@ const BoardPage: React.FC = () => {
                 {/*<DragDropContext onDragEnd={handleOnDragEnd}>*/}
                 <div className={listContainer}>
                     {listsUI}
-                    <SmartButton boardId={boardId}/>
+                    <SmartButton boardId={boardId} />
                 </div>
                 {/*</DragDropContext>*/}
             </main>

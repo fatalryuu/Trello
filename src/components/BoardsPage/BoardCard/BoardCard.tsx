@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
 import { BoardType, deleteBoard, editBoard } from "../../../redux/slices/boardsSlice.ts";
 import { addAction } from "../../../redux/slices/menuSlice.ts";
-import { wrapper, name as nameStyle, button, name__input } from "./BoardCard.css.ts";
+import { wrapper, name as nameStyle, button, nameInput } from "./BoardCard.css.ts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
@@ -34,7 +34,7 @@ const BoardCard: React.FC<PropsType> = ({ info }) => {
         if (isVisible && newName && newName.length <= 16) {
             if (!boards.some((board: BoardType) => board.name === newName && name !== newName)) {
                 dispatch(editBoard({ id, name: newName }));
-                dispatch(addAction({ text: `You renamed this board from "${name}" to "${newName}"`, boardId: id }));
+                dispatch(addAction({ text: `renamed this board from "${name}" to "${newName}"`, boardId: id }));
                 setIsVisible(false);
                 setNewName("");
             }
@@ -48,7 +48,7 @@ const BoardCard: React.FC<PropsType> = ({ info }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //max 16 symbols
-        if (newName.length < 16 || e.target.value === newName.substring(0, newName.length - 1)) {
+        if (newName.length < 16 || e.target.value === newName.substring(0, newName.length - 1) || e.target.value === "") {
             setNewName(e.target.value)
         }
     }
@@ -62,12 +62,12 @@ const BoardCard: React.FC<PropsType> = ({ info }) => {
                 null
             }
             <input type="text"
-                   placeholder="New name..."
+                   placeholder="New name"
                    value={newName}
                    onChange={handleChange}
                    onClick={(e) => e.stopPropagation()}
                    hidden={!isVisible}
-                   className={name__input}
+                   className={nameInput}
                    autoFocus={true}
             />
             <div>
