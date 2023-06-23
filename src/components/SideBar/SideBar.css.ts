@@ -2,19 +2,43 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../vars.css.ts";
 
 export const wrapper = style({
-    width: "12%",
-    padding: 20,
-    borderRight: `1px solid ${vars.colors.borderColor}`
+    width: "14%",
+    borderRight: `1px solid ${vars.colors.borderColor}`,
+});
+
+export const trello__header = style({
+    borderBottom: `1px solid ${vars.colors.borderColor}`,
+    marginBottom: 10,
+    textAlign: "center",
+    padding: 10,
+});
+
+export const active = style({
+    backgroundColor: "#cccccc",
 });
 
 export const element = style({
     display: "flex",
     cursor: "pointer",
+    textDecoration: "none",
+    color: "black",
+    padding: "5px 10px",
+    alignItems: "center",
+    fontSize: "1.2rem",
     ":hover": {
-        backgroundColor: "#e3e3e3",
+        backgroundColor: "#ececec",
+    },
+    ":active": {
+        backgroundColor: "#cccccc",
     },
 });
 
-export const active = style({
-    backgroundColor: "#ccc",
+export const text = style({
+    marginLeft: 10,
+    fontWeight: 400,
+});
+
+export const boards__header = style({
+    padding: "5px 10px 5px 10px",
+    fontSize: "1.2rem",
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { active, element } from "../SideBar.css.ts";
-import { preview } from "./Element.css.ts";
+import { preview, name as nameStyle } from "./Element.css.ts";
 import { NavLink } from "react-router-dom";
 
 type PropType = {
@@ -11,7 +11,7 @@ const Element: React.FC<PropType> = ({name}) => {
     return (
         <NavLink to={name} className={({isActive}) => isActive ? `${element} ${active}` : element}>
             <div className={preview}></div>
-            <span>{name}</span>
+            <span className={nameStyle}>{name}</span>
         </NavLink>
     );
 };
