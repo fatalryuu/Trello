@@ -4,6 +4,7 @@ import { addList, ListType } from "../../../redux/slices/listsSlice.ts";
 import { addAction } from "../../../redux/slices/menuSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
+import { getFilteredListsSelector } from "../../../selectors/selectors.ts";
 
 type PropsType = {
     boardId: number,
@@ -13,7 +14,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [listName, setListName] = useState("");
 
-    const lists: Array<ListType> = useSelector((state: RootState) => state.lists.lists.filter((list: ListType) => list.boardId === boardId));
+    const lists: Array<ListType> = useSelector((state: RootState) => getFilteredListsSelector(state, boardId));
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -37,7 +38,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
     };
 
     return (
-        <button onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
+        <div onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
             {isOpen
                 ? <div>
                     <input
@@ -60,7 +61,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
                     Add List
                 </>
             }
-        </button>
+        </div>
     );
 };
 

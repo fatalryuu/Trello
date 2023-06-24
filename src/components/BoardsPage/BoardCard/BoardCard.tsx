@@ -33,8 +33,10 @@ const BoardCard: React.FC<PropsType> = ({ info }) => {
         }
         if (isVisible && newName && newName.length <= 16) {
             if (!boards.some((board: BoardType) => board.name === newName && name !== newName)) {
-                dispatch(editBoard({ id, name: newName }));
-                dispatch(addAction({ text: `renamed this board from "${name}" to "${newName}"`, boardId: id }));
+                if (name !== newName) {
+                    dispatch(editBoard({ id, name: newName }));
+                    dispatch(addAction({ text: `renamed this board from "${name}" to "${newName}"`, boardId: id }));
+                }
                 setIsVisible(false);
                 setNewName("");
             }

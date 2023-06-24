@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { add, form, plus, input } from "./SmartButton.css.ts";
+import { add, form, plus, text, input } from "./SmartButton.css.ts";
 import { closeButton, lower, submit } from "../../SmartButton/SmartButton.css.ts";
 import { ListType } from "../../../../redux/slices/listsSlice.ts";
 import { addAction } from "../../../../redux/slices/menuSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../redux/store.ts";
 import { addTask } from "../../../../redux/slices/tasksSlice.ts";
+import { getFilteredListsSelector } from "../../../../selectors/selectors.ts";
 
 type PropsType = {
     boardId: number,
@@ -16,7 +17,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
 
-    const lists: Array<ListType> = useSelector((state: RootState) => state.lists.lists.filter((list: ListType) => list.boardId === boardId));
+    const lists: Array<ListType> = useSelector((state: RootState) => getFilteredListsSelector(state, boardId));
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -24,7 +25,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
         e.stopPropagation();
         if (taskName) {
             const id: number = Math.round(Math.random() * 10000);
-            dispatch(addTask({ id, name: taskName, description: null, listId }));
+            dispatch(addTask({ id, name: taskName, description: "", listId }));
             dispatch(addAction({
                 text: `added card "${taskName}" to the list "${lists.find((list: ListType) => list.id === listId)?.name}"`,
                 boardId
@@ -48,7 +49,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
     }
 
     return (
-        <button onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
+        <div onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
             {isOpen
                 ? <div>
                     <input
@@ -68,10 +69,12 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
                     <span className={plus}>
                         +&nbsp;
                     </span>
-                    Add Card
+                    <span className={text}>
+                        Add Card
+                    </span>
                 </>
             }
-        </button>
+        </div>
     );
 };
 

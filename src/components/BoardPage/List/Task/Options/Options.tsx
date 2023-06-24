@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { addAction } from "../../../../../redux/slices/menuSlice.ts";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../redux/store.ts";
-import { button, nameInput, wrapper } from "./Options.css.ts";
+import { button, input, wrapper } from "./Options.css.ts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
@@ -27,8 +27,10 @@ const Options: React.FC<PropsType> = ({ id, name, boardId, isVisible, setIsVisib
             setNewName(name);
         }
         if (isVisible && newName && newName.length <= 16) {
-            dispatch(editTask({ id, name: newName }));
-            dispatch(addAction({text: `renamed task "${name}" to "${newName}"`, boardId}));
+            if (name !== newName) {
+                dispatch(editTask({ id, name: newName }));
+                dispatch(addAction({ text: `renamed task "${name}" to "${newName}"`, boardId }));
+            }
             setIsVisible(false);
             setNewName("");
         }
@@ -55,7 +57,7 @@ const Options: React.FC<PropsType> = ({ id, name, boardId, isVisible, setIsVisib
                    onChange={handleChange}
                    onClick={e => e.stopPropagation()}
                    hidden={!isVisible}
-                   className={nameInput}
+                   className={input}
                    autoFocus={true}
             />
             <div>

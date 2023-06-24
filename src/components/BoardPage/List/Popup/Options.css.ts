@@ -15,6 +15,7 @@ export const button = style({
 
 export const nameInput = style({
     border: "none",
+    background: "#f3f3f3",
     borderBottom: "1px solid black",
     outline: "none",
     width: "50%",

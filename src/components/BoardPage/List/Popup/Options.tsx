@@ -28,8 +28,10 @@ const Options: React.FC<PropsType> = ({ id, name, boardId, isVisible, setIsVisib
         }
         if (isVisible && newName && newName.length <= 16) {
             if (!lists.some((list: ListType) => list.name === newName && list.boardId === boardId && name !== newName)) {
-                dispatch(editList({ id, name: newName }));
-                dispatch(addAction({ text: `renamed list "${name}" to "${newName}"`, boardId }));
+                if (name !== newName) {
+                    dispatch(editList({ id, name: newName }));
+                    dispatch(addAction({ text: `renamed list "${name}" to "${newName}"`, boardId }));
+                }
                 setIsVisible(false);
                 setNewName("");
             }

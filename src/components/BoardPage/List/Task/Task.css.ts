@@ -18,14 +18,19 @@ export const top = style({
 
 export const taskName = style({
     fontWeight: 600,
-
+    paddingBottom: 5,
 });
 
 export const taskDescription = style({
-    marginTop: 10,
+    display: "block",
+    marginTop: 5,
     paddingBottom: 5,
     maxWidth: 250,
     height: "auto",
     overflowWrap: "break-word",
+});
+
+export const hidden = style({
+    display: "none",
 });
 

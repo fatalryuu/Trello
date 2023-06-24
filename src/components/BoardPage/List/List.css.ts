@@ -2,8 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const wrapper = style({
     alignSelf: "flex-start",
-    minWidth: 250,
-    maxWidth: 270,
+    minWidth: 270,
     margin: "0 10px",
     backgroundColor: "#f3f3f3",
     padding: 10,

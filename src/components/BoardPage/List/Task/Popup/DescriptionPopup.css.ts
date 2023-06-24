@@ -15,7 +15,7 @@ export const form = style({
     top: "30%",
     left: "35%",
     width: 500,
-    height: 200,
+    height: 180,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 15,

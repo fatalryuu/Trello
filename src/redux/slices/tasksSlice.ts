@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type TaskType = {
     id: number;
     name: string;
-    description: string | null;
+    description: string;
     listId: number;
 }
 

@@ -13,10 +13,12 @@ export const button = style({
     paddingRight: 10,
 });
 
-export const nameInput = style({
+export const input = style({
     border: "none",
     borderBottom: "1px solid black",
     outline: "none",
     width: "50%",
     marginRight: 39,
+    paddingBottom: 2,
+    marginBottom: 6,
 });

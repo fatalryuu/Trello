@@ -16,9 +16,10 @@ export const add = style({
     fontSize: "1rem",
     padding: "9px 10px",
     minWidth: 270,
-    height: 46,
+    height: 27,
     cursor: "pointer",
     marginLeft: 5,
+    marginRight: 15,
     transition: "0.1 ease",
     ":hover": {
         backgroundColor: "#419eff",
@@ -37,7 +38,9 @@ export const form = style({
     fontSize: "1rem",
     padding: 7,
     minWidth: 270,
+    height: 73,
     marginLeft: 5,
+    marginRight: 15,
 });
 
 export const input = style({
