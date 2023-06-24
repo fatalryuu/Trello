@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AppDispatch, RootState } from "../../../../../redux/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { addDescription, TaskType } from "../../../../../redux/slices/tasksSlice.ts";
@@ -20,12 +20,16 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
     const dispatch: AppDispatch = useDispatch();
     const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
     useEffect(() => {
         setDescription(initDesc ? initDesc : "");
-    }, [initDesc]);
+        if (isOpen && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [initDesc, isOpen]);
 
     const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log("dfsds");
         e.preventDefault();
         setDescription("");
         setIsOpen(false);
@@ -56,20 +60,22 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
     return (
         <div hidden={!isOpen} className={wrapper} onClick={handleCloseWindow}>
             <form onSubmit={handleSubmit} className={form} onClick={e => e.stopPropagation()}>
-                <button onClick={handleClose} className={closeButton}>X</button>
                 <h2 className={nameHeader}>{name}</h2>
                 <div className={listHeader}>in list <b>{list}</b></div>
                 <label htmlFor="name" className={label}>Description:</label>
                 <br/>
-                <input type="text"
-                       id="name"
-                       value={description}
-                       autoComplete="off"
-                       onChange={handleChange}
-                       className={input}
+                <input
+                    ref={inputRef}
+                    type="text"
+                    id="name"
+                    value={description}
+                    autoComplete="off"
+                    onChange={handleChange}
+                    className={input}
                 />
                 <br/>
                 <input type="submit" value="Save" className={submit}/>
+                <button onClick={handleClose} className={closeButton}>X</button>
             </form>
         </div>
     );

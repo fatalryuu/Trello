@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBoard, BoardType } from "../../../redux/slices/boardsSlice.ts";
 import { AppDispatch, RootState } from "../../../redux/store.ts";
@@ -14,9 +14,13 @@ const NewBoardPopup: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
     const [name, setName] = useState("");
     const dispatch: AppDispatch = useDispatch();
     const boards: Array<BoardType> = useSelector((state: RootState) => state.boards.boards);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setName("");
+        if (isOpen && inputRef.current) {
+            inputRef.current.focus();
+        }
     }, [isOpen]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,9 +38,9 @@ const NewBoardPopup: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //max 16 symbols
         if (name.length < 16 || e.target.value === name.substring(0, name.length - 1)) {
-            setName(e.target.value)
+            setName(e.target.value);
         }
-    }
+    };
 
     return (
         <div hidden={!isOpen} className={wrapper}>
@@ -47,11 +51,16 @@ const NewBoardPopup: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
             <form onSubmit={handleSubmit} className={form}>
                 <label htmlFor="name">Board header</label>
                 <br/>
-                <input type="text" id="name" value={name} autoComplete="off"
-                       onChange={handleChange}
-                       autoFocus={true}
-                       required={true}
-                       className={input}
+                <input
+                    ref={inputRef}
+                    type="text"
+                    id="name"
+                    value={name}
+                    autoComplete="off"
+                    onChange={handleChange}
+                    autoFocus={true}
+                    required={true}
+                    className={input}
                 />
                 <br/>
                 <input type="submit" value="Create" className={submit}/>
