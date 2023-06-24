@@ -41,6 +41,10 @@ export const listHeader = style({
     marginBottom: 20,
 });
 
+export const label = style({
+    cursor: "text",
+});
+
 export const input = style({
     width: "90%",
     outline: "none",

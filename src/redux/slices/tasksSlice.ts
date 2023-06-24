@@ -46,14 +46,17 @@ export const tasksSlice = createSlice({
             }
         },
         updateTasks(state, action: PayloadAction<Array<TaskType>>) {
-            state.tasks = action.payload;
+            state.tasks = state.tasks.filter((task: TaskType) => !action.payload.find((t: TaskType) => t.id === task.id));
+            state.tasks.unshift(...action.payload);
         },
-        moveTask(state, action: PayloadAction<{id: number, listId: number}>) {
-            const { id, listId } = action.payload;
-            const task: TaskType | undefined = state.tasks.find((task: TaskType) => task.id === id);
-            if (task) {
-                task.listId = listId;
-            }
+        moveTask(state, action: PayloadAction<{listId: number, tasks: Array<TaskType>}>) {
+            state.tasks = state.tasks.filter((task: TaskType) => !action.payload.tasks.find((t: TaskType) => t.id === task.id));
+            state.tasks.unshift(...action.payload.tasks.map((task: TaskType) => {
+                return {
+                    ...task,
+                    listId: action.payload.listId
+                }
+            }));
         },
     },
 });

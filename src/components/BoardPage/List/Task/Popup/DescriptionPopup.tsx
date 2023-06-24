@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../../../../../redux/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { addDescription, TaskType } from "../../../../../redux/slices/tasksSlice.ts";
 import { addAction } from "../../../../../redux/slices/menuSlice.ts";
-import { wrapper, form, closeButton, nameHeader, listHeader, input, submit } from "./DescriptionPopup.css.ts";
+import { wrapper, form, closeButton, nameHeader, listHeader, input, submit, label } from "./DescriptionPopup.css.ts";
 
 type PropsType = {
     name: string,
@@ -25,6 +25,7 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
     }, [initDesc]);
 
     const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log("dfsds");
         e.preventDefault();
         setDescription("");
         setIsOpen(false);
@@ -58,7 +59,7 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
                 <button onClick={handleClose} className={closeButton}>X</button>
                 <h2 className={nameHeader}>{name}</h2>
                 <div className={listHeader}>in list <b>{list}</b></div>
-                <label htmlFor="name">Description:</label>
+                <label htmlFor="name" className={label}>Description:</label>
                 <br/>
                 <input type="text"
                        id="name"
