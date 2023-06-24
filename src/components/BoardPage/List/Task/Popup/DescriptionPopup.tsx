@@ -29,7 +29,6 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
     const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        setDescription("");
         setIsOpen(false);
     };
 
@@ -40,15 +39,11 @@ const DescriptionPopup: React.FC<PropsType> = ({ name, list, initDesc, boardId, 
             text: `added description "${description}" to the "${tasks.find((task: TaskType) => task.id === taskId)?.name}" card`,
             boardId
         }));
-        setDescription("");
         setIsOpen(false);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //max 16 symbols
-        if (description.length < 16 || e.target.value === description.substring(0, description.length - 1) || e.target.value === "") {
-            setDescription(e.target.value);
-        }
+        setDescription(e.target.value);
     };
 
     return (
