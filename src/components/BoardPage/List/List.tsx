@@ -46,7 +46,7 @@ const List: React.FC<PropsType> = ({ info }) => {
                 <Droppable droppableId={id.toString()} key={id}>
                     {(provided) => {
                         return (
-                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                            <div style={{minHeight: "1px"}} {...provided.droppableProps} ref={provided.innerRef}>
                                 {tasks.map((task: TaskType, index) => {
                                     return (
                                         <Draggable
