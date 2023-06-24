@@ -18,7 +18,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
 
     const dispatch: AppDispatch = useDispatch();
 
-    const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.stopPropagation();
         if (listName && !lists.some((list: ListType) => list.name === listName && list.boardId === boardId)) {
             const id: number = Math.round(Math.random() * 10000);
@@ -40,7 +40,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
     return (
         <div onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
             {isOpen
-                ? <div>
+                ? <form onSubmit={handleSubmit}>
                     <input
                         type="text"
                         placeholder="Enter list name"
@@ -50,10 +50,10 @@ const SmartButton: React.FC<PropsType> = ({ boardId }) => {
                         autoFocus={true}
                     />
                     <div className={lower}>
-                        <button onClick={onAddClick} className={submit}>Add List</button>
+                        <input type="submit" className={submit} value="Add List"/>
                         <button onClick={onClose} className={closeButton}>X</button>
                     </div>
-                </div>
+                </form>
                 : <>
                     <span className={plus}>
                         +&nbsp;

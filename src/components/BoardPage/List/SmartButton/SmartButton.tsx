@@ -21,7 +21,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
 
     const dispatch: AppDispatch = useDispatch();
 
-    const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.stopPropagation();
         if (taskName) {
             const id: number = Math.round(Math.random() * 10000);
@@ -51,7 +51,7 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
     return (
         <div onClick={() => setIsOpen(true)} className={!isOpen ? add : form}>
             {isOpen
-                ? <div>
+                ? <form onSubmit={handleSubmit}>
                     <input
                         type="text"
                         placeholder="Enter name for this card"
@@ -61,10 +61,10 @@ const SmartButton: React.FC<PropsType> = ({ boardId, listId }) => {
                         autoFocus={true}
                     />
                     <div className={lower}>
-                        <button onClick={onAddClick} className={submit}>Add Card</button>
+                        <input type="submit" className={submit} value="Add Card"/>
                         <button onClick={onClose} className={closeButton}>X</button>
                     </div>
-                </div>
+                </form>
                 : <>
                     <span className={plus}>
                         +&nbsp;
